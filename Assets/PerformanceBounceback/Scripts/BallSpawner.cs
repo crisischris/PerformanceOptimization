@@ -7,7 +7,7 @@ public class BallSpawner : MonoBehaviour {
     public static BallSpawner current;
 
     public GameObject pooledBall; //the prefab of the object in the object pool
-    public int ballsAmount = 20; //the number of objects you want in the object pool
+    public int ballsAmount = 50; //the number of objects you want in the object pool
     public List<GameObject> pooledBalls; //the object pool
     public static int ballPoolNum = 0; //a number used to cycle through the pooled objects
 
@@ -34,31 +34,37 @@ public class BallSpawner : MonoBehaviour {
 public GameObject GetPooledBall()
 {
     ballPoolNum++;
-    if (ballPoolNum > (ballsAmount - 1))
-    {
-        ballPoolNum = 0;
+        
+         if (ballPoolNum > (ballsAmount - 1))
+           {
+               ballPoolNum = 0;
+           }
+
+       
+      
+
+        //if we’ve run out of objects in the pool too quickly, create a new one
+        if (pooledBalls[ballPoolNum].activeInHierarchy)
+          {
+             //create a new bullet and add it to the bulletList
+             GameObject obj = Instantiate(pooledBall);
+             pooledBalls.Add(obj);           
+             ballsAmount++;
+             ballPoolNum = ballsAmount - 1;
+             
+          }
+             Debug.Log(ballPoolNum);
+              return pooledBalls[ballPoolNum];
     }
-    //if we’ve run out of objects in the pool too quickly, create a new one
-    if (pooledBalls[ballPoolNum].activeInHierarchy)
-    {
-        //create a new bullet and add it to the bulletList
-        GameObject obj = Instantiate(pooledBall);
-        pooledBalls.Add(obj);
-        ballsAmount++;
-        ballPoolNum = ballsAmount - 1;
-    }
-        Debug.Log(ballPoolNum);
-        return pooledBalls[ballPoolNum];
-}
-   	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         cooldown -= Time.deltaTime;
         if(cooldown <= 0)
         {
             cooldown = cooldownLength;
-            SpawnBall();
-        }		
+            SpawnBall();            
+        }	
 	}
 
     void SpawnBall()
@@ -69,5 +75,8 @@ public GameObject GetPooledBall()
         selectedRigidbody.velocity = Vector3.zero;
         selectedRigidbody.angularVelocity = Vector3.zero;
         selectedBall.SetActive(true);
+      
     }
+
+      
 }
