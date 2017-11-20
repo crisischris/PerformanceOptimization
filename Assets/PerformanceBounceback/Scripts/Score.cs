@@ -14,10 +14,13 @@ public class Score : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+	}
 
+    public void pointScored()
+    {
         Text text = GetComponentInChildren<Text>();
         text.text = "Score: " + gameManager.score.ToString();
 
-		
-	}
+    }
 }

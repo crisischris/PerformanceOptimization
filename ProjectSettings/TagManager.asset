@@ -8,6 +8,7 @@ TagManager:
   - projectile
   - Throwable
   - Floor
+  - ScoreKeep
   layers:
   - Default
   - TransparentFX
