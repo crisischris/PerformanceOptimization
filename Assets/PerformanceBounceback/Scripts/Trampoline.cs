@@ -8,29 +8,14 @@ public class Trampoline : MonoBehaviour {
     public GameManager scoreScript;
     public Score score;
 
-	// Use this for initialization
-	void Start () {
-
-        scoreScript = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-        score = GameObject.FindGameObjectWithTag("ScoreKeep").GetComponent<Score>();
-    }
 	
-	// Update is called once per frame
-	void Update () {
-       
-       
-
-	}
-
     void OnCollisionEnter(Collision col)
     {
         if (col.gameObject.CompareTag("Throwable"))
         {
-            pSystem = GetComponentInChildren<ParticleSystem>();
             //Score Point
-            scoreScript.score++;
-            score.pointScored();
+            GameManager.score++;
+            score.ChangeScoreUI();
             //Particle effect
             pSystem.Play();
 

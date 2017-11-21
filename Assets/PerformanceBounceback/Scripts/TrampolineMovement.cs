@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class TrampolineMovement : MonoBehaviour {
 
-    public Vector3 direction = new Vector3(1,0,0);
+    public Vector3 direction = Vector3.right;
     public float moveSpeed = 3.5f;
     public float moveTime = 3f;
     private float time;
+    public Rigidbody rb;
 	
-	// Update is called once per frame
-	void Update () {
+
+    void FixedUpdate()
+    {
+        rb.MovePosition(transform.position += direction * Time.deltaTime * moveSpeed);
+    }
+
+
+
+    // Update is called once per frame
+    void Update () {
         time += Time.deltaTime;
         if(time > moveTime)
         {
@@ -18,6 +27,6 @@ public class TrampolineMovement : MonoBehaviour {
             direction = direction * -1;
         }
 
-        transform.position += direction * Time.deltaTime * moveSpeed;		
+       	
 	}
 }
